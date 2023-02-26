@@ -15,9 +15,9 @@ model_name = "bloom-560m"
 tokenizer = BloomTokenizerFast.from_pretrained(f"bigscience/{model_name}", add_prefix_space=True)
 model = BloomForCausalLM.from_pretrained(f"bigscience/{model_name}")
 
-
+max_length = 5000
 descriptions = pd.read_json('oci-dataset-train.json')
-descriptions = descriptions[descriptions['text'].str.len() < 1000]['text']
+descriptions = descriptions[descriptions['text'].str.len() < max_length]['text']
 max_length = max([len(tokenizer.encode(description)) for description in descriptions])
 
 
