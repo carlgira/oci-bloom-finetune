@@ -14,6 +14,7 @@ tokenizer = BloomTokenizerFast.from_pretrained(f"bigscience/{model_name}", add_p
 model = BloomForCausalLM.from_pretrained(f"bigscience/{model_name}")
 
 descriptions = pd.read_json('dataset.json')['text']
+descriptions = descriptions[descriptions['text'].str.len() < 1000]['text']
 max_length = max([len(tokenizer.encode(description)) for description in descriptions])
 
 
@@ -52,6 +53,7 @@ trainer = Trainer(model=model, args=training_args, train_dataset=train_dataset,
 
 generated = tokenizer("<|startoftext|>", return_tensors="pt").input_ids.cuda()
 
+'''
 sample_outputs = model.generate(generated, do_sample=True, top_k=50,
                                 bos_token='<|startoftext|>',
                                 eos_token='<|endoftext|>', pad_token='<|pad|>',
@@ -59,3 +61,4 @@ sample_outputs = model.generate(generated, do_sample=True, top_k=50,
                                 max_length=300, top_p=0.95, temperature=1.9, num_return_sequences=20)
 for i, sample_output in enumerate(sample_outputs):
     print("{}: {}".format(i, tokenizer.decode(sample_output, skip_special_tokens=True)))
+'''
