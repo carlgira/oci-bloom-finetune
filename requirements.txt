@@ -1,5 +1,7 @@
 transformers
 datasets
-torch
+torch; sys_platform == 'darwin'
+--extra-index-url https://download.pytorch.org/whl/cu113
+torch==1.12.1+cu113; sys_platform != 'darwin'
 jupyterlab
 ipywidgets
