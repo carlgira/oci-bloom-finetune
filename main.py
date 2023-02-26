@@ -13,7 +13,7 @@ model_name = "bloom-560m"
 tokenizer = BloomTokenizerFast.from_pretrained(f"bigscience/{model_name}", add_prefix_space=True)
 model = BloomForCausalLM.from_pretrained(f"bigscience/{model_name}")
 
-descriptions = pd.read_json('dataset.json')['text']
+descriptions = pd.read_json('dataset.json')
 descriptions = descriptions[descriptions['text'].str.len() < 1000]['text']
 max_length = max([len(tokenizer.encode(description)) for description in descriptions])
 
